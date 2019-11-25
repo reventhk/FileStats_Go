@@ -10,6 +10,7 @@ import (
 	"sort"
 	"os/exec"
 	"strings"
+	"errors"
 
 )
 
@@ -66,7 +67,11 @@ func AddFile(metadata FileMetadata) error {
 	if _, err := os.Stat(metadata.Path); err == nil {
 		var storedData MetaJson
 		 
-		calcFileSize(&metadata)
+		err = calcFileSize(&metadata)
+		if err != nil{
+			 fmt.Println(err.Error())
+			return err
+		}
 
 		if _, err := os.Stat(tmpFile); err == nil {
 			if err := Load(tmpFile, &storedData); err != nil {	  		 
@@ -107,10 +112,14 @@ func checkAndUpdateJson(tmpJson *MetaJson, metadata FileMetadata) {
 	var timeStampData TimeStampData
 	
 	if len(tmpJson.FileList) > 0 {
-	 for _ , metadata_item := range tmpJson.FileList { 
+	 for i, metadata_item := range tmpJson.FileList { 
 		 
-		if metadata_item.Path == metadata.Path{
+		if metadata_item.Path == metadata.Path {
 			is_file_aaded = true
+			// if file modified by user
+			if metadata_item.Size != metadata.Size {
+				tmpJson.FileList[i].Size = metadata.Size
+			}
 		}
 	 } 
 	}else{
@@ -144,6 +153,8 @@ func checkAndUpdateJson(tmpJson *MetaJson, metadata FileMetadata) {
 //}
 // TextPercentage may not give correct value on windows os
 
+var LogFatalf = log.Fatalf
+
 func GetStats() FileStats{
 
 	var storedData MetaJson
@@ -161,7 +172,18 @@ func GetStats() FileStats{
 			  log.Fatalln(err)
 		}else {
 		}
-	}
+	}else if os.IsNotExist(err) {
+		 
+		//fmt.Println("Data is not available !!")
+		LogFatalf("Data is not available !!")
+		 
+	  
+	  } else {
+		//fmt.Println("Data is not available !!")
+		LogFatalf("Data is not available !!")
+		 
+	  }
+
 
 	for _ , metadata_item := range storedData.FileList { 
 
@@ -246,18 +268,21 @@ return data
 }
 
 // calculate given file size
-func calcFileSize(metadata *FileMetadata) {
+func calcFileSize(metadata *FileMetadata) error {
 
 	fi, _ := os.Stat(metadata.Path);
 	
 	switch mode := fi.Mode(); {
     case mode.IsDir():
         // do directory stuff
-		log.Fatalln("Given Directory, provide file path")
+		
+		return errors.New("Given Directory, provide file path")
          
     }
 
 	metadata.Size = fi.Size()
+
+	return nil
 } 
 
 // check weather file is binary or not.
