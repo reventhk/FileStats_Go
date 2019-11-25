@@ -200,7 +200,6 @@ func GetStats() FileStats{
 // Funtion to get most frequest files(extentions) added by user
 func getMostFreqFileExt(arr []string) ExtInfo{
 
-	fmt.Println(arr)
 	dict:= make(map[string]int)
 	for _ , num :=  range arr {
 	dict[num] = dict[num]+1
@@ -250,7 +249,14 @@ return data
 func calcFileSize(metadata *FileMetadata) {
 
 	fi, _ := os.Stat(metadata.Path);
-		
+	
+	switch mode := fi.Mode(); {
+    case mode.IsDir():
+        // do directory stuff
+		log.Fatalln("Given Directory, provide file path")
+         
+    }
+
 	metadata.Size = fi.Size()
 } 
 
