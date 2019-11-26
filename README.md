@@ -10,12 +10,13 @@ go get -v -u github.com/reventhk/FileStats_Go
   FileMetadata  structuretype 
   
   provide metadata as below structure
-  
+  <pre>
 	FileMetadata struct {
 	Path string `json:"path"` // the file's absolute path
 	Size int64 `json:"size"` // the file size in bytes
-	IsBinary bool `json:"is_binary"` // whether the file is a binary file or a simple text file
-}
+	IsBinary bool `json:"is_binary"` // whether the file is a binary file or a simple text file		 
+        }
+  </pre>	
  Provide default values for Size and IsBinary bool
  
  
@@ -24,6 +25,7 @@ go get -v -u github.com/reventhk/FileStats_Go
  GetStats() FileStats 
  
  Returns all files stats till now added by user in below format 
+ <pre>
 type FileStats struct {
 	NumFiles int64 `json:"num_files"`
 	LargestFile LargestFileInfo `json:"largest_file"`
@@ -32,6 +34,7 @@ type FileStats struct {
 	TextPercentage float32 `json:"text_percentage"`
 	MostRecentPaths []string `json:"most_recent_paths"`
 }
+</pre>
  TextPercentage may not give correct value on windows os
  
  
