@@ -5,10 +5,7 @@ import (
 	"testing"
 	file_stats "github.com/reventhk/FileStats_Go"
 	"strings"
-	"fmt"
-	 
-	 
-	 
+
 )
 
 func TestAddFile(t *testing.T){

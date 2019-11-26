@@ -175,12 +175,12 @@ func GetStats() FileStats{
 	}else if os.IsNotExist(err) {
 		 
 		//fmt.Println("Data is not available !!")
-		LogFatalf("Data is not available !!")
+		log.Fatalln("Data is not available !!")
 		 
 	  
 	  } else {
 		//fmt.Println("Data is not available !!")
-		LogFatalf("Data is not available !!")
+		log.Fatalln("Data is not available !!")
 		 
 	  }
 
