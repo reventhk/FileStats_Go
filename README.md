@@ -3,6 +3,11 @@ Library that performs statistics and aggregations for file metadata provided to 
 
 ## import go package by using below command
 go get -v -u github.com/reventhk/FileStats_Go
+and 
+write in your main package file.
+file_stats "github.com/reventhk/FileStats_Go"
+
+
 
 ## Input
  AddFile(metaData FileMetadata)
