@@ -5,8 +5,9 @@ Library that performs statistics and aggregations for file metadata provided to 
 go get -v -u github.com/reventhk/FileStats_Go
 and 
 write in your main package file.
+<pre>
 file_stats "github.com/reventhk/FileStats_Go"
-
+</pre>
 
 
 ## Input
