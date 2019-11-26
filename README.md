@@ -6,7 +6,9 @@ go get -v -u github.com/reventhk/FileStats_Go
 and 
 write in your main package file.
 <pre>
+import(
 file_stats "github.com/reventhk/FileStats_Go"
+)
 </pre>
 
 
